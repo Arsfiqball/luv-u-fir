@@ -7,12 +7,15 @@ var player;
 var cpu;
 var text;
 var changeText = false;
+var turnLeft = false;
+var turnRight = false;
 
 function preload() {
   game.load.image('sky', 'assets/sky.png');
   game.load.image('ground', 'assets/platform.png');
   game.load.spritesheet('cpu', 'assets/cpu.png', 32, 46);
   game.load.spritesheet('player', 'assets/player.png', 32, 40);
+  game.load.spritesheet('buttons', 'assets/buttons.png', 60, 32);
 }
 
 function create() {
@@ -53,6 +56,23 @@ function create() {
   // cursors
   cursors = game.input.keyboard.createCursorKeys();
 
+  var leftButton = game.add.sprite(16+32, game.world.height-16-32, 'buttons');
+  leftButton.frame = 0;
+  leftButton.inputEnabled = true;
+  leftButton.events.onInputOver.add(function() { turnLeft = true; });
+  leftButton.events.onInputDown.add(function() { turnLeft = true; });
+  leftButton.events.onInputOut.add(function() { turnLeft = false; });
+  leftButton.events.onInputUp.add(function() { turnLeft = false; });
+
+  var rightButton = game.add.sprite(game.world.width-60-16-32, game.world.height-16-32, 'buttons');
+  rightButton.frame = 1;
+  rightButton.inputEnabled = true;
+  rightButton.events.onInputOver.add(function() { turnRight = true; });
+  rightButton.events.onInputDown.add(function() { turnRight = true; });
+  rightButton.events.onInputOut.add(function() { turnRight = false; });
+  rightButton.events.onInputUp.add(function() { turnRight = false; });
+
+
   var style = {
     font: "14pt Arial",
     fill: "#777",
@@ -75,10 +95,10 @@ function update() {
   cpu.body.velocity.x = 0;
 
   // player movement
-  if (cursors.left.isDown) {
+  if (cursors.left.isDown || turnLeft) {
     player.body.velocity.x = -200;
     player.animations.play('left');
-  } else if (cursors.right.isDown) {
+  } else if (cursors.right.isDown || turnRight) {
     player.body.velocity.x = 200;
     player.animations.play('right');
   } else {
