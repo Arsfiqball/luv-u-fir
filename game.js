@@ -29,7 +29,6 @@ function create() {
 
   // ground platform
   var ground = platforms.create(0, game.world.height - 64, 'ground');
-  ground.scale.setTo(2, 2);
   ground.body.immovable = true;
 
   // cpu
@@ -56,7 +55,7 @@ function create() {
 
   var style = {
     font: "14pt Arial",
-    fill: "#FFFFFF",
+    fill: "#777",
     align: "center",
     boundsAlignH: "center",
     boundsAlignV: "center"
