@@ -10,6 +10,10 @@ var changeText = false;
 var turnLeft = false;
 var turnRight = false;
 
+function goFullscreen() {
+  game.scale.startFullScreen();
+}
+
 function preload() {
   game.load.image('sky', 'assets/sky.png');
   game.load.image('ground', 'assets/platform.png');
@@ -19,6 +23,9 @@ function preload() {
 }
 
 function create() {
+
+  // fullscreen keep original size
+  game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 
   // arcade mode
   game.physics.startSystem(Phaser.Physics.ARCADE);
